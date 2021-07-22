@@ -1,0 +1,120 @@
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- DATA TABLE -->
+                    <h3 class="title-5 m-b-35">Manutenção</h3>
+                    <div class="table-data__tool">
+                        
+                            <div  class="table-data__tool-right">
+                            <a href="#" data-toggle="modal" data-target="#modalAppointment" class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                <i class="zmdi zmdi-plus"></i>Adicionar Manutenção</a>
+                        </div>
+                    </div>
+                    <div class="table-responsive table-responsive-data2">
+                        <table class="table table-data2">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Data de início</th>
+                                    <th>Data final</th>
+                                    <th>Descrição</th>
+                                    <th>Breakdown</th>
+                                    <th>Departamento</th>
+                                    <th>Equipamento</th>
+                                    <th>Tecnico</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            {{#if hasMaintenance}} 
+                            <tbody>
+                               {{#each Maintenances }} 
+
+                                <tr class="tr-shadow">
+                                    <td>{{this.Id}}</td>
+                                    <td>{{this.StartDate}}</td>
+                                    <td>{{this.EndDate}}</td>
+                                    <td>{{this.Description}}</td>
+                                    <td>{{this.BreakDownCode}}</td>
+                                    <td>{{this.Department}}</td>
+                                    <td><img src="images/{{this.EquipmentImage}}" style="height: 50px; width:50px; border-radius: 50%;" >  {{this.EquipmentName}}-{{this.EquipmentCode}}</td>
+                                    <td> <img src="images/{{this.ClinicalEngineerImage}}" style="height: 50px; width:50px; border-radius: 50%;" > {{this.ClinicalEngineer}} </td>
+                                    <td>
+                                       <div class="table-data-feature">
+                                                <a href="/maintenance/edit/{{ this.Id }}" class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                    <i class="zmdi zmdi-edit"></i>
+                                                </a>
+                                                <a href="/maintenance/delete/{{ this.Id }}" class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                    <i class="zmdi zmdi-delete"></i>
+                                                </a>        
+
+                                            </div>
+                                    </td>
+                                </tr>
+                                <tr class="spacer"></tr>
+                              {{/each}} 
+                             </tbody>
+                           {{/if}} 
+                        </table>
+                    </div>
+                    <!-- END DATA TABLE -->
+                </div>
+            </div>
+                
+        </div>
+    </div>
+</div>
+
+<!-- POPUP-->
+<div class="modal fade" id="modalAppointment" tabindex="-1" role="dialog" aria-labelledby="modalAppointmentLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          
+          <div class="modal-body">
+            <form method="POST" action="/maintenance/add">
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="login-logo">
+                  
+                    <img src="images/icon/logo-mini.png" alt="Cool Admin" /> <strong>L-MMS</strong></a>
+                </div>
+                <div class="login-form">
+                          <div class="form-group">
+                            <label class=" form-control-label">Cod do Tecnico</label>
+                            <select name="DSSN"required id="select" class="form-control">
+                                {{#each Engineers}}
+                                    <option value="{{this.DSSN}}">{{this.FName}} {{this.LName}} {{this.DSSN}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class=" form-control-label">Cod Break Down</label>
+                            <select name="BreakDownID"required id="select" class="form-control">
+                                {{#each breakDowns}}
+                                    <option value="{{this.Code}}">{{this.Code}} : {{this.Date}} ({{this.EquipmentName}}-{{this.EquipmentCode}}) {{this.Reason}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                           <div class="form-group">
+                            <label class=" form-control-label">Data de início</label>
+                            <input type="date" required name="StartDate" placeholder="Digite Data de início " class="form-control">
+                        </div>
+                           <div class="form-group">
+                            <label class=" form-control-label">Data final</label>
+                            <input type="date" required name="EndDate" placeholder="Digite Data final  " class="form-control">
+                        </div>
+                           <div class="form-group">
+                            <label class=" form-control-label">Descrição</label>
+                            <input type="text" required name="Description" placeholder="Digite Descrição " class="form-control">
+                        </div>
+                        <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">ADD</button>
+                </div>
+            </form>
+          </div>  
+        </div>
+    </div>     
+</div>  
